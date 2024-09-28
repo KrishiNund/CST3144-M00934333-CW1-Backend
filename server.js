@@ -38,14 +38,64 @@ connectToMongoDB();
 //sepcifying default database
 const database = client.db("After_School_Classes");
 
-app.get('/getlessons', getAllLessons);
+//api routes
+app.get('/api/lessons', getAllLessons);
 
 async function getAllLessons(req,res){
   const collection = database.collection("Lessons");
   const lessons = await collection.find({}).toArray();
-  res.send({message:"Lessons Successfully Retrieved",data:posts});
+  res.send({message:"Lessons Successfully Retrieved",data:lessons});
+  //console.log(lessons);
 }
 
+app.post('/api/orders', postOrder);
+
+async function postOrder(req,res){
+  const collection = database.collection("Orders");
+  try{
+    const orderDetails = {
+      name:"Sam",
+      phoneNumber:"2345678",
+      lessons:[
+        {
+          lessonID:1,
+          numberOfSpaces:3
+        },
+        {
+          lessonID:2,
+          numberOfSpaces:4
+        }
+      ]
+    };
+
+    const result = await collection.insertOne(orderDetails); //later to be replaced by req.body
+
+    res.status(201).send({message:"Order Created Successfully", data: result});
+    //console.log(result);
+  } catch (err){
+    res.status(500).send({message:"Internal Server error"});
+  } 
+}
+
+app.put('/api/updatelesson',updateLesson);
+
+async function updateLesson(req,res){
+  const collection = database.collection("Lessons");
+  try{
+    //!for loop to be added after
+    const result = collection.updateOne(
+      {id:req.body.id},
+      {
+        $set:{
+          [req.body.attribute]:req.body.value
+        }
+      }
+    )
+    res.status(201).send({message:"Lesson Updated Successfully", data: result});
+  } catch(err){
+    res.status(500).send({message:"Internal Server error"});
+  }
+}
 //starting server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
