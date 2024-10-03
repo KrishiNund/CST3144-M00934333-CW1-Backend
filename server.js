@@ -74,9 +74,8 @@ app.put('/api/updatelesson',updateLesson);
 async function updateLesson(req,res){
   const collection = database.collection("Lessons");
   try{
-    //!for loop to be added after
     const result = collection.updateOne(
-      {id:req.body.id},
+      {subject:req.body.subject},
       {
         $set:{
           [req.body.attribute]:req.body.value
