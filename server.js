@@ -59,22 +59,8 @@ app.post('/api/orders', postOrder);
 async function postOrder(req,res){
   const collection = database.collection("Orders");
   try{
-    const orderDetails = {
-      name:"Sam",
-      phoneNumber:"2345678",
-      lessons:[
-        {
-          lessonID:1,
-          numberOfSpaces:3
-        },
-        {
-          lessonID:2,
-          numberOfSpaces:4
-        }
-      ]
-    };
-
-    const result = await collection.insertOne(orderDetails); //later to be replaced by req.body
+    
+    const result = await collection.insertOne(req.body); 
 
     res.status(201).send({message:"Order Created Successfully", data: result});
     //console.log(result);
