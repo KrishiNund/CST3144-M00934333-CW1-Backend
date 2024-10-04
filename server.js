@@ -96,7 +96,7 @@ async function searchLesson(req,res){
     const collection = database.collection("Lessons");
     const lessons = await collection.find({}).toArray();
 
-    const query = req.query.query;
+    const query = req.query.query || '';
     
 
     const filteredLessons = lessons.filter(lesson =>  lesson.subject.toLowerCase().includes(query.toLowerCase()) ||
