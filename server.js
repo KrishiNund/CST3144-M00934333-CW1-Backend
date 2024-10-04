@@ -88,6 +88,15 @@ async function updateLesson(req,res){
   }
 }
 
+//dynamic search 
+app.get('/api/search', searchLesson);
+
+async function searchLesson(req,res){
+  
+}
+
+
+
 //starting server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
