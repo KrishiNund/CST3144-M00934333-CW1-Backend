@@ -99,8 +99,8 @@ async function searchLesson(req,res){
     const query = req.query.query;
     
 
-    const filteredLessons = lessons.filter(lesson =>  lesson.subject.includes(query) ||
-                                                      lesson.location.includes(query) ||
+    const filteredLessons = lessons.filter(lesson =>  lesson.subject.toLowerCase().includes(query.toLowerCase()) ||
+                                                      lesson.location.toLowerCase().includes(query.toLowerCase()) ||
                                                       lesson.price.toString().includes(query) ||
                                                       lesson.spaces.toString().includes(query));
 
