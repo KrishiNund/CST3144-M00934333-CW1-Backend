@@ -92,6 +92,22 @@ async function updateLesson(req,res){
 app.get('/api/search', searchLesson);
 
 async function searchLesson(req,res){
+  try{
+    const collection = database.collection("Lessons");
+    const lessons = await collection.find({}).toArray();
+
+    const query = req.query.query;
+    
+
+    const filteredLessons = lessons.filter(lesson =>  lesson.subject.includes(query) ||
+                                                      lesson.location.includes(query) ||
+                                                      lesson.price.toString().includes(query) ||
+                                                      lesson.spaces.toString().includes(query));
+
+    res.send({message:"Lessons Successfully Filtered",data:filteredLessons});
+  } catch(err){
+    res.status(500).send({message:"Filter Unsuccessdful"});
+  }
   
 }
 
