@@ -69,7 +69,7 @@ async function postOrder(req, res) {
 }
 
 //update value of attribute specified for lesson
-app.put("/api/updatelesson", updateLesson);
+app.put("/api/updateLesson", updateLesson);
 
 async function updateLesson(req, res) {
   const collection = database.collection("Lessons");
