@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const mongodb = require("mongodb");
 const cors = require("cors");
+const morgan = require("morgan");
 
 //creating express app
 const app = express();
@@ -13,6 +14,9 @@ app.use(express.json());
 
 //allow request from any origin
 app.use(cors());
+
+// Use Morgan for logging
+app.use(morgan("short"));
 
 //creating client instance
 const client = new mongodb.MongoClient(process.env.MONGODB_URI, {
@@ -113,7 +117,7 @@ async function searchLesson(req, res) {
       data: filteredLessons,
     });
   } catch (err) {
-    res.status(500).send({ message: "Filter Unsuccessdful" });
+    res.status(500).send({ message: "Filter Unsuccessful" });
   }
 }
 
