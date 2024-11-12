@@ -4,6 +4,7 @@ const express = require("express");
 const mongodb = require("mongodb");
 const cors = require("cors");
 const morgan = require("morgan");
+const path = require("path")
 
 //creating express app
 const app = express();
@@ -16,7 +17,21 @@ app.use(express.json());
 app.use(cors());
 
 // Use Morgan for logging
-app.use(morgan("short"));
+app.use(morgan("tiny"));
+
+// Static file middleware for lesson images
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+// Error handler for missing image files
+app.use((err, req, res, next) => {
+  if (err) {
+      res.status(404).send({ message: "Image file not found" });
+  } else {
+      next();
+  }
+});
+
+
 
 //creating client instance
 const client = new mongodb.MongoClient(process.env.MONGODB_URI, {
