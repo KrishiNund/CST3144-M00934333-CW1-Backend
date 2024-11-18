@@ -4,7 +4,7 @@ const express = require("express");
 const mongodb = require("mongodb");
 const cors = require("cors");
 const morgan = require("morgan");
-const path = require("path")
+const path = require("path");
 
 //*creating express app
 const app = express();
@@ -27,8 +27,7 @@ HTTP status codes:
 app.use(morgan("tiny"));
 
 //* static file middleware for lesson images
-app.use('/images', express.static(path.join(__dirname, 'images')));
-
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 //*creating client instance
 const client = new mongodb.MongoClient(process.env.MONGODB_URI, {
