@@ -29,16 +29,6 @@ app.use(morgan("tiny"));
 //* static file middleware for lesson images
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-//* error handler for missing image files
-app.use((err, req, res, next) => {
-  if (err) {
-      res.status(404).send({ message: "Image file not found" });
-  } else {
-      next();
-  }
-});
-
-
 
 //*creating client instance
 const client = new mongodb.MongoClient(process.env.MONGODB_URI, {
