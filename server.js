@@ -98,7 +98,7 @@ async function updateLesson(req, res) {
       }
     );
     res
-      .status(201)
+      .status(200)
       .send({ message: "Lesson Updated Successfully", data: result });
   } catch (err) {
     res.status(500).send({ message: "Internal Server error" });
